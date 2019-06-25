@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="App1.pages.devicepage">
+    <ContentPage.Content>
+        <StackLayout>
+            <Label x:Name="deviceName" Text="Device: loading" HorizontalOptions="CenterAndExpand" />
+            <Label x:Name="deviceDesc" Text="loading..." HorizontalOptions="CenterAndExpand" />
+
+
+            <ListView x:Name="CommandList" RowHeight="72">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout Grid.Row="1" Orientation="Horizontal" HorizontalOptions="CenterAndExpand"  Spacing="0">
+                                <Label VerticalOptions="CenterAndExpand" Text="{Binding name}"/>
+                                <Entry VerticalOptions="CenterAndExpand" Placeholder="True"/>
+                                <Button Text="Send"></Button>
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
