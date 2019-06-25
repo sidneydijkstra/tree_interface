@@ -30,5 +30,12 @@ namespace App1.pages{
             deviceName.Text = "Device: " + _device.id;
             deviceDesc.Text = _device.description;
         }
-	}
+
+        private void Button_Clicked(object sender, EventArgs e){
+            Button b = (Button)sender;
+            Command command = _commands.ToList().Find(x => x.name == b.CommandParameter.ToString());
+            if (command != null)
+                command.send(_device.id, true);
+        }
+    }
 }

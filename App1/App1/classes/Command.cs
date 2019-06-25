@@ -31,5 +31,18 @@ public class Command{
             param[i] = (CommandParams)int.Parse(formatParams[i]);
         }
     }
+
+    public void send(string _name, params object[] _values) {
+        string command = "DEVSEN;" + _name + ";";
+        command += type == CommandType.REGCOM ? "COM;" : "RET;";
+        command += name + ";";
+        for (int i = 0; i < _values.Length; i++){
+            command += _values[i].ToString();
+            if (i < _values.Length - 1)
+                command += ",";
+        }
+
+        ServerConnection.send(command);
+    }
 }
 

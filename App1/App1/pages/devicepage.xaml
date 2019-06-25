@@ -15,7 +15,7 @@
                             <StackLayout Grid.Row="1" Orientation="Horizontal" HorizontalOptions="CenterAndExpand"  Spacing="0">
                                 <Label VerticalOptions="CenterAndExpand" Text="{Binding name}"/>
                                 <Entry VerticalOptions="CenterAndExpand" Placeholder="True"/>
-                                <Button Text="Send"></Button>
+                                <Button Clicked="Button_Clicked" Text="Send" CommandParameter="{Binding name}"></Button>
                             </StackLayout>
                         </ViewCell>
                     </DataTemplate>
