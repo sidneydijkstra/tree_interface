@@ -16,7 +16,7 @@ public enum CommandParams {
 
 public class Command{
     public CommandType type;
-    public string name;
+    public string name { get; set; }
     public CommandParams[] param;
 
     public Command(string[] _formatData) {

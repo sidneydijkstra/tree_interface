@@ -12,9 +12,10 @@
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
-                            <StackLayout HorizontalOptions="CenterAndExpand">
-                                <Entry Placeholder="Username" PlaceholderColor="Olive" HorizontalOptions="CenterAndExpand"/>
-                                <Label Text="label" HorizontalOptions="CenterAndExpand"/>
+                            <StackLayout Grid.Row="1" Orientation="Horizontal" HorizontalOptions="CenterAndExpand"  Spacing="0">
+                                <Label VerticalOptions="CenterAndExpand" Text="{Binding name}"/>
+                                <Entry VerticalOptions="CenterAndExpand" Placeholder="True"/>
+                                <Button Text="Send"></Button>
                             </StackLayout>
                         </ViewCell>
                     </DataTemplate>
