@@ -17,7 +17,10 @@ public enum CommandParams {
 public class Command{
     public CommandType type;
     public string name { get; set; }
+    public string value { get; set; }
     public CommandParams[] param;
+
+    public Action<string> OnReciveRetData;
 
     public Command(string[] _formatData) {
 
@@ -43,6 +46,10 @@ public class Command{
         }
 
         ServerConnection.send(command);
+    }
+
+    public void setValue(String _value) {
+        value = _value;
     }
 }
 

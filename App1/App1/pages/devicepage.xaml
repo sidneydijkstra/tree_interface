@@ -8,14 +8,34 @@
             <Label x:Name="deviceDesc" Text="loading..." HorizontalOptions="CenterAndExpand" />
 
 
-            <ListView x:Name="CommandList" RowHeight="72">
+            <ListView x:Name="CommandComList" RowHeight="48">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout Grid.Row="1" Orientation="Horizontal" HorizontalOptions="CenterAndExpand"  Spacing="0">
+
+                                <Label VerticalOptions="CenterAndExpand" Text="{Binding name}"/>
+                                <Picker x:Name="_valueInput" WidthRequest="60" VerticalOptions="CenterAndExpand"  SelectedIndex="1">
+                                    <Picker.Items>
+                                        <x:String>True</x:String>
+                                        <x:String>False</x:String>
+                                    </Picker.Items>
+                                </Picker>
+                                <Button Clicked="clickComSend" Text="Send" CommandParameter="{Binding name}"></Button>
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            
+            <ListView x:Name="CommandRetList" RowHeight="48">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
                             <StackLayout Grid.Row="1" Orientation="Horizontal" HorizontalOptions="CenterAndExpand"  Spacing="0">
                                 <Label VerticalOptions="CenterAndExpand" Text="{Binding name}"/>
-                                <Entry VerticalOptions="CenterAndExpand" Placeholder="True"/>
-                                <Button Clicked="Button_Clicked" Text="Send" CommandParameter="{Binding name}"></Button>
+                                <Button Clicked="clickRetSend" Text="Recieve" CommandParameter="{Binding name}"></Button>
+                                <Label x:Name="_valueOutput" VerticalOptions="CenterAndExpand" Text="{Binding value}"/>
                             </StackLayout>
                         </ViewCell>
                     </DataTemplate>

@@ -66,10 +66,26 @@ public static class ServerConnection{
                 OnNewDeviceConnection?.Invoke(dev);
                 devices.Add(dev);
             } else if (formatData[0] == "DEVUPD") {
-                Device device = devices.Find(x => x.id == formatData[1]);
-                if (device != null) {
-                    device.addCommand(formatData);
+                string[] formatCommand = new string[formatData.Length-2];
+                for (int i = 0; i < formatData.Length; i++){
+                    formatData[i] = formatCommand[i + 2];
                 }
+
+                Device device = devices.Find(x => x.id == formatData[1]);
+                if (device == null)
+                    return;
+
+                if (formatCommand[0] == "REGRET") {
+                    device.addCommand(formatData);
+                } else if (formatCommand[0] == "RET") {
+                    Command comm = device.commands.Find(x => x.name == formatCommand[1]);
+                    if (comm != null) {
+                        comm.OnReciveRetData?.Invoke(formatData[2]);
+                    }
+                }
+                
+            } else if (formatData[0] == "RET") {
+
             }
         };
     }

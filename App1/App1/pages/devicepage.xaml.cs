@@ -13,14 +13,19 @@ namespace App1.pages{
 	public partial class devicepage : ContentPage{
 
         private Device _device;
-        private ObservableCollection<Command> _commands = new ObservableCollection<Command>();
+        private ObservableCollection<Command> _commandsCom = new ObservableCollection<Command>();
+        private ObservableCollection<Command> _commandsRet = new ObservableCollection<Command>();
 
         public devicepage(Device _device){
 			InitializeComponent();
             this._device = _device;
-            CommandList.ItemsSource = this._commands;
-            foreach (Command command in _device.commands){
-                _commands.Add(command);
+            CommandComList.ItemsSource = this._commandsCom;
+            CommandRetList.ItemsSource = this._commandsRet;
+            foreach (Command command in _device.commands.FindAll(x => x.type == CommandType.REGCOM)){
+                _commandsCom.Add(command);
+            }
+            foreach (Command command in _device.commands.FindAll(x => x.type == CommandType.REGRET)){
+                _commandsRet.Add(command);
             }
             initPage();
 
@@ -31,11 +36,29 @@ namespace App1.pages{
             deviceDesc.Text = _device.description;
         }
 
-        private void Button_Clicked(object sender, EventArgs e){
+        private void clickComSend(object sender, EventArgs e){
             Button b = (Button)sender;
-            Command command = _commands.ToList().Find(x => x.name == b.CommandParameter.ToString());
-            if (command != null)
-                command.send(_device.id, true);
+            Command command = _commandsCom.ToList().Find(x => x.name == b.CommandParameter.ToString());
+            if (command != null) {
+                Picker entry = b.Parent.FindByName<Picker>("_valueInput");
+                bool value;
+                if(bool.TryParse(entry.SelectedItem.ToString(), out value)) { 
+                    command.send(_device.id, value);
+                }
+            }
+        }
+
+        private void clickRetSend(object sender, EventArgs e) {
+            Button b = (Button)sender;
+            Command command = _commandsRet.ToList().Find(x => x.name == b.CommandParameter.ToString());
+            if (command != null) {
+                Label label = b.Parent.FindByName<Label>("_valueOutput");
+                command.OnReciveRetData += (string _data)=>{
+                    if (label != null) {
+                        label.Text = _data;
+                    }
+                };
+            }
         }
     }
 }
