@@ -1,9 +1,11 @@
-﻿using System;
+﻿using App1;
+using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading;
+using Xamarin.Forms;
 
 public class NetworkError{
     public bool error;
@@ -14,8 +16,8 @@ public class NetworkError{
 public static class ServerConnection{
     private static Thread _listenThread;
 
-    public static Action<Device> OnNewDeviceConnection;
-    public static List<Device> devices;
+    public static Action<DeviceController> OnNewDeviceConnection;
+    public static List<DeviceController> devices;
 
     public static Action OnConnectionStarted;
     public static Action<string> OnRecieveTcpPackage;
@@ -31,7 +33,7 @@ public static class ServerConnection{
         if (isConnected())
             return new NetworkError() { error = false };
 
-        devices = new List<Device>();
+        devices = new List<DeviceController>();
 
         ip = IPAddress.Parse(_ip);
         port = _port;
@@ -60,31 +62,40 @@ public static class ServerConnection{
         OnRecieveTcpPackage += (string _data)=>{
             string[] formatData = _data.Split(';');
             if (formatData[0] == "INIT") {
-                send("GETDEV");
+                //send("GETDEV");
             } else if (formatData[0] == "REGDEV") {
-                Device dev = new Device(formatData[1], formatData[2]);
+                DeviceController dev = new DeviceController(formatData[1], formatData[2]);
+                DeviceController tempDev = devices.Find(x => x.id == dev.id) ?? null;
+                if (tempDev != null) {
+                    devices.Remove(tempDev);
+                }
                 OnNewDeviceConnection?.Invoke(dev);
                 devices.Add(dev);
+            } else if (formatData[0] == "SYNCSET") {
+                if (formatData[1] == "info") {
+                    SettingsController.load(formatData[2]);
+                }
             } else if (formatData[0] == "DEVUPD") {
-                string[] formatCommand = new string[formatData.Length-2];
-                for (int i = 0; i < formatData.Length; i++){
-                    formatData[i] = formatCommand[i + 2];
+                string[] formatCommand = new string[formatData.Length - 2];
+                for (int i = 0; i < formatCommand.Length; i++) {
+                    formatCommand[i] = formatData[i + 2];
                 }
 
-                Device device = devices.Find(x => x.id == formatData[1]);
+                DeviceController device = devices.Find(x => x.id == formatData[1]);
                 if (device == null)
                     return;
 
-                if (formatCommand[0] == "REGRET") {
+
+                if (formatCommand[0] == "REGCOM" || formatCommand[0] == "REGRET") {
                     device.addCommand(formatData);
-                } else if (formatCommand[0] == "RET") {
+                }
+                else if (formatCommand[0] == "RET") {
                     Command comm = device.commands.Find(x => x.name == formatCommand[1]);
-                    if (comm != null) {
-                        comm.OnReciveRetData?.Invoke(formatData[2]);
+                    if (comm != null)
+                    {
+                        comm.OnReciveRetData?.Invoke(formatCommand[2]);
                     }
                 }
-                
-            } else if (formatData[0] == "RET") {
 
             }
         };
@@ -113,12 +124,19 @@ public static class ServerConnection{
         _connection.Send(Encoding.ASCII.GetBytes(_data));
     }
 
+    public static void refresh() {
+        devices.Clear();
+        send("GETDEV");
+    }
+
     public static void stop() {
         _listenThread.Abort();
         _connection.Close();
         _listenThread = null;
         _connection = null;
         OnConnectionEnded?.Invoke();
+
+        Application.Current.MainPage = new MainPage();
     }
 
 }

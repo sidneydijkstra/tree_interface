@@ -8,40 +8,40 @@
             <Label x:Name="deviceDesc" Text="loading..." HorizontalOptions="CenterAndExpand" />
 
 
-            <ListView x:Name="CommandComList" RowHeight="48">
+            <ListView x:Name="CommandComList" RowHeight="48" VerticalOptions="Start">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
-                            <StackLayout Grid.Row="1" Orientation="Horizontal" HorizontalOptions="CenterAndExpand"  Spacing="0">
+                            <StackLayout Grid.Row="1" Orientation="Horizontal" HorizontalOptions="CenterAndExpand" Margin="10" Spacing="0">
 
-                                <Label VerticalOptions="CenterAndExpand" Text="{Binding name}"/>
-                                <Picker x:Name="_valueInput" WidthRequest="60" VerticalOptions="CenterAndExpand"  SelectedIndex="1">
+                                <Label VerticalOptions="CenterAndExpand" HorizontalOptions="Start" Text="{Binding name}"/>
+                                <Picker x:Name="_valueInput" WidthRequest="60" VerticalOptions="CenterAndExpand" HorizontalOptions="Start" SelectedIndex="1">
                                     <Picker.Items>
                                         <x:String>True</x:String>
                                         <x:String>False</x:String>
                                     </Picker.Items>
                                 </Picker>
-                                <Button Clicked="clickComSend" Text="Send" CommandParameter="{Binding name}"></Button>
+                                <Button Clicked="clickComSend" Text="Send" HorizontalOptions="EndAndExpand" CommandParameter="{Binding name}"></Button>
                             </StackLayout>
                         </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
             
-            <ListView x:Name="CommandRetList" RowHeight="48">
+            <ListView x:Name="CommandRetList" RowHeight="48" VerticalOptions="Start">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
-                            <StackLayout Grid.Row="1" Orientation="Horizontal" HorizontalOptions="CenterAndExpand"  Spacing="0">
-                                <Label VerticalOptions="CenterAndExpand" Text="{Binding name}"/>
-                                <Button Clicked="clickRetSend" Text="Recieve" CommandParameter="{Binding name}"></Button>
-                                <Label x:Name="_valueOutput" VerticalOptions="CenterAndExpand" Text="{Binding value}"/>
+                            <StackLayout Grid.Row="1" Orientation="Horizontal" Margin="10" Spacing="0">
+                                <Label VerticalOptions="CenterAndExpand" HorizontalOptions="Start" Text="{Binding name}"/>
+                                <Button Clicked="clickRetSend" Text="Recieve" HorizontalOptions="Start" CommandParameter="{Binding name}"></Button>
+                                <Label x:Name="_valueOutput" VerticalOptions="CenterAndExpand" HorizontalOptions="EndAndExpand" Text="NULL"/>
                             </StackLayout>
                         </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
-
+            
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

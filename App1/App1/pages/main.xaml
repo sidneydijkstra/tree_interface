@@ -17,6 +17,12 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
+
+            <StackLayout Grid.Row="1" Orientation="Horizontal" VerticalOptions="End">
+                <Button HorizontalOptions="CenterAndExpand" Clicked="clickNavigateSettings" Text="Settings"></Button>
+                <Button HorizontalOptions="CenterAndExpand" Clicked="clickPartyMode" Text="Party"></Button>
+            </StackLayout>
+            
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

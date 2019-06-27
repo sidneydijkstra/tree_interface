@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Xamarin.Forms;
 
 public enum CommandType {
     REGCOM,
@@ -19,6 +20,8 @@ public class Command{
     public string name { get; set; }
     public string value { get; set; }
     public CommandParams[] param;
+
+    public Label displayLabel;
 
     public Action<string> OnReciveRetData;
 
@@ -50,6 +53,13 @@ public class Command{
 
     public void setValue(String _value) {
         value = _value;
+        try{
+            if (displayLabel != null)
+                displayLabel.Text = _value;
+        }
+        catch (Exception){
+            return;
+        }
     }
 }
 

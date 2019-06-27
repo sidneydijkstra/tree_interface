@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="App1.pages.settingspage">
+    <ContentPage.Content>
+        <StackLayout Margin="0">
+            <Label Text="Tree Settings" HorizontalOptions="CenterAndExpand" VerticalOptions="Start"/>
+            <StackLayout Grid.Row="1" Orientation="Horizontal" HorizontalOptions="Start" VerticalOptions="Start" Margin="4">
+                <Label Text="Name:" HorizontalOptions="Start" VerticalOptions="Center"/>
+                <Entry x:Name="entryName" Text="NULL" HorizontalOptions="CenterAndExpand" VerticalOptions="Center"/>
+            </StackLayout>
+
+            <StackLayout Grid.Row="1" Orientation="Horizontal" HorizontalOptions="Start" VerticalOptions="Start" Margin="4">
+                <Label Text="Server Ip:" HorizontalOptions="Start" VerticalOptions="Center"/>
+                <Entry x:Name="entryIp" Text="NULL" HorizontalOptions="CenterAndExpand" VerticalOptions="Center"/>
+            </StackLayout>
+
+            <StackLayout Grid.Row="1" Orientation="Horizontal" HorizontalOptions="Start" VerticalOptions="Start" Margin="4">
+                <Label Text="Server Port:" HorizontalOptions="Start" VerticalOptions="Center"/>
+                <Entry x:Name="entryPort" Text="NULL" HorizontalOptions="CenterAndExpand" VerticalOptions="Center"/>
+            </StackLayout>
+
+            <StackLayout Grid.Row="1" Orientation="Horizontal" HorizontalOptions="Start" VerticalOptions="Start" Margin="4">
+                <Label Text="Auth Id:" HorizontalOptions="Start" VerticalOptions="Center"/>
+                <Entry x:Name="entryAuthId" Text="NULL" HorizontalOptions="CenterAndExpand" VerticalOptions="Center"/>
+            </StackLayout>
+
+            <Button Clicked="clickResyncSettingsInfo" Text="Save Settings" HorizontalOptions="CenterAndExpand"/>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

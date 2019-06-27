@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using System.Text;
 
-public class Device{
+public class DeviceController{
 
     public string id { get; set; }
     public string description { get; set; }
 
     public List<Command> commands;
 
-    public Device(string _id, string _description) {
+    public DeviceController(string _id, string _description) {
         commands = new List<Command>();
         this.id = _id;
         this.description = _description;

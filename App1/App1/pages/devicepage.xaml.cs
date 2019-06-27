@@ -12,11 +12,11 @@ namespace App1.pages{
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class devicepage : ContentPage{
 
-        private Device _device;
+        private DeviceController _device;
         private ObservableCollection<Command> _commandsCom = new ObservableCollection<Command>();
         private ObservableCollection<Command> _commandsRet = new ObservableCollection<Command>();
 
-        public devicepage(Device _device){
+        public devicepage(DeviceController _device){
 			InitializeComponent();
             this._device = _device;
             CommandComList.ItemsSource = this._commandsCom;
@@ -42,6 +42,8 @@ namespace App1.pages{
             if (command != null) {
                 Picker entry = b.Parent.FindByName<Picker>("_valueInput");
                 bool value;
+                if (entry.SelectedItem.ToString() == "" || entry.SelectedItem.ToString() == null) // TODO: add all values support
+                    return;
                 if(bool.TryParse(entry.SelectedItem.ToString(), out value)) { 
                     command.send(_device.id, value);
                 }
@@ -53,12 +55,14 @@ namespace App1.pages{
             Command command = _commandsRet.ToList().Find(x => x.name == b.CommandParameter.ToString());
             if (command != null) {
                 Label label = b.Parent.FindByName<Label>("_valueOutput");
+                command.displayLabel = label;
                 command.OnReciveRetData += (string _data)=>{
-                    if (label != null) {
-                        label.Text = _data;
-                    }
+                    Device.BeginInvokeOnMainThread(()=> { command.setValue(_data); });
                 };
+                ServerConnection.send("DEVSEN;" + _device.id + ";RET;" + command.name);
             }
         }
+
+        
     }
 }
