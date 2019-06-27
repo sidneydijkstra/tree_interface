@@ -15,6 +15,7 @@ namespace App1.pages{
         private DeviceController _device;
         private ObservableCollection<Command> _commandsCom = new ObservableCollection<Command>();
         private ObservableCollection<Command> _commandsRet = new ObservableCollection<Command>();
+        private ObservableCollection<Setting_Device_Commmand> _commandsDisplay = new ObservableCollection<Setting_Device_Commmand>();
 
         public devicepage(DeviceController _device){
 			InitializeComponent();
@@ -28,12 +29,31 @@ namespace App1.pages{
                 _commandsRet.Add(command);
             }
             initPage();
-
         }
 
         private void initPage() {
             deviceName.Text = "Device: " + _device.id;
             deviceDesc.Text = _device.description;
+
+            // set picket items
+            List<string> _names = new List<string>();
+            foreach (Command command in _commandsRet){
+                _names.Add(command.name);
+            }
+            bindCommandPicker.ItemsSource = _names;
+
+            // set command display
+            CommandBindList.ItemsSource = _commandsDisplay;
+            syncCommands();
+        }
+
+        private void syncCommands() {
+            _commandsDisplay.Clear();
+            if (SettingsController.commands != null) { 
+                foreach (Setting_Device_Commmand comm in SettingsController.commands){
+                    _commandsDisplay.Add(comm);
+                }
+            }
         }
 
         private void clickComSend(object sender, EventArgs e){
@@ -63,6 +83,46 @@ namespace App1.pages{
             }
         }
 
-        
+        private void clickBindNewCommand(object sender, EventArgs e){
+            int type = bindTypePicker.SelectedIndex;
+            string _id = bindCommandPicker.SelectedItem.ToString();
+            Setting_Device_Commmand[] temp = SettingsController.commands;
+            Setting_Device_Commmand[] commands;
+
+            if (temp == null)
+            {
+                commands = new Setting_Device_Commmand[1];
+            }
+            else {
+                int size = temp.Length == 0 ? 1 : temp.Length;
+                commands = new Setting_Device_Commmand[size];
+                for (int i = 0; i < temp.Length; i++){
+                    commands[i] = temp[i];
+                }
+            }
+
+            
+            commands[commands.Length - 1] = new Setting_Device_Commmand() { type = (SettingDeviceCommandType)type, deviceName = _device.id, id = _id };
+
+            SettingsController.resyncCommands(commands);
+            Device.BeginInvokeOnMainThread(()=> { syncCommands(); });
+        }
+
+        private void clickRemoveCommand(object sender, EventArgs e){
+            string id = ((Button)sender).Parent.FindByName<Label>("_idLabel").Text;
+
+            Setting_Device_Commmand[] temp = SettingsController.commands;
+            Setting_Device_Commmand[] list = new Setting_Device_Commmand[temp.Length-1];
+            int count = 0;
+            foreach (Setting_Device_Commmand comm in temp){
+                if (comm.id != id) {
+                    list[count] = comm;
+                    count++;
+                }
+            }
+
+            SettingsController.resyncCommands(list);
+            Device.BeginInvokeOnMainThread(() => { syncCommands(); });
+        }
     }
 }

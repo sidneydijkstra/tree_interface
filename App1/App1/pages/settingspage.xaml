@@ -6,26 +6,23 @@
         <StackLayout Margin="0">
             <Label Text="Tree Settings" HorizontalOptions="CenterAndExpand" VerticalOptions="Start"/>
             <StackLayout Grid.Row="1" Orientation="Horizontal" HorizontalOptions="Start" VerticalOptions="Start" Margin="4">
-                <Label Text="Name:" HorizontalOptions="Start" VerticalOptions="Center"/>
-                <Entry x:Name="entryName" Text="NULL" HorizontalOptions="CenterAndExpand" VerticalOptions="Center"/>
+                <Label Text="RGB Normal:" HorizontalOptions="Start" VerticalOptions="Center"/>
+                <Entry x:Name="entryNormalR" Text="255" HorizontalOptions="CenterAndExpand" VerticalOptions="Center"/>
+                <Entry x:Name="entryNormalG" Text="255" HorizontalOptions="CenterAndExpand" VerticalOptions="Center"/>
+                <Entry x:Name="entryNormalB" Text="255" HorizontalOptions="CenterAndExpand" VerticalOptions="Center"/>
             </StackLayout>
 
             <StackLayout Grid.Row="1" Orientation="Horizontal" HorizontalOptions="Start" VerticalOptions="Start" Margin="4">
-                <Label Text="Server Ip:" HorizontalOptions="Start" VerticalOptions="Center"/>
-                <Entry x:Name="entryIp" Text="NULL" HorizontalOptions="CenterAndExpand" VerticalOptions="Center"/>
+                <Label Text="RGB Blink:" HorizontalOptions="Start" VerticalOptions="Center"/>
+                <Entry x:Name="entryBlinkR" Text="255" HorizontalOptions="CenterAndExpand" VerticalOptions="Center"/>
+                <Entry x:Name="entryBlinkG" Text="255" HorizontalOptions="CenterAndExpand" VerticalOptions="Center"/>
+                <Entry x:Name="entryBlinkB" Text="255" HorizontalOptions="CenterAndExpand" VerticalOptions="Center"/>
             </StackLayout>
 
-            <StackLayout Grid.Row="1" Orientation="Horizontal" HorizontalOptions="Start" VerticalOptions="Start" Margin="4">
-                <Label Text="Server Port:" HorizontalOptions="Start" VerticalOptions="Center"/>
-                <Entry x:Name="entryPort" Text="NULL" HorizontalOptions="CenterAndExpand" VerticalOptions="Center"/>
+            <StackLayout Grid.Row="1" Orientation="Horizontal" HorizontalOptions="CenterAndExpand" VerticalOptions="End" Margin="4">
+                <Button Clicked="clickResyncSettingsTree" Text="Save Settings" HorizontalOptions="CenterAndExpand" VerticalOptions="End"/>
+                <Button Clicked="clickNavigateAdvancedSettings" Text="Advanced" HorizontalOptions="CenterAndExpand" VerticalOptions="End"/>
             </StackLayout>
-
-            <StackLayout Grid.Row="1" Orientation="Horizontal" HorizontalOptions="Start" VerticalOptions="Start" Margin="4">
-                <Label Text="Auth Id:" HorizontalOptions="Start" VerticalOptions="Center"/>
-                <Entry x:Name="entryAuthId" Text="NULL" HorizontalOptions="CenterAndExpand" VerticalOptions="Center"/>
-            </StackLayout>
-
-            <Button Clicked="clickResyncSettingsInfo" Text="Save Settings" HorizontalOptions="CenterAndExpand"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

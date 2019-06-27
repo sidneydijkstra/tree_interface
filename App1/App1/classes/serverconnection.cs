@@ -73,7 +73,11 @@ public static class ServerConnection{
                 devices.Add(dev);
             } else if (formatData[0] == "SYNCSET") {
                 if (formatData[1] == "info") {
-                    SettingsController.load(formatData[2]);
+                    SettingsController.loadInfo(formatData[2]);
+                } else if (formatData[1] == "tree") {
+                    SettingsController.loadTree(formatData[2]);
+                }else if (formatData[1] == "commands") {
+                    SettingsController.loadCommands(formatData[2]);
                 }
             } else if (formatData[0] == "DEVUPD") {
                 string[] formatCommand = new string[formatData.Length - 2];
@@ -84,7 +88,6 @@ public static class ServerConnection{
                 DeviceController device = devices.Find(x => x.id == formatData[1]);
                 if (device == null)
                     return;
-
 
                 if (formatCommand[0] == "REGCOM" || formatCommand[0] == "REGRET") {
                     device.addCommand(formatData);

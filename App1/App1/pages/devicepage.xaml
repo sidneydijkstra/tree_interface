@@ -21,7 +21,7 @@
                                         <x:String>False</x:String>
                                     </Picker.Items>
                                 </Picker>
-                                <Button Clicked="clickComSend" Text="Send" HorizontalOptions="EndAndExpand" CommandParameter="{Binding name}"></Button>
+                                <Button Clicked="clickComSend" Text="Send" HorizontalOptions="CenterAndExpand" FontSize="12" CommandParameter="{Binding name}"></Button>
                             </StackLayout>
                         </ViewCell>
                     </DataTemplate>
@@ -41,7 +41,38 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
-            
+
+            <Label VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" Text="Add New Command"/>
+
+            <StackLayout Grid.Row="1" Orientation="Horizontal" Margin="4" Spacing="0">
+                <Picker x:Name="bindTypePicker" WidthRequest="60" VerticalOptions="CenterAndExpand" HorizontalOptions="Start" SelectedIndex="1">
+                    <Picker.Items>
+                        <x:String>SET</x:String>
+                        <x:String>BLINK</x:String>
+                    </Picker.Items>
+                </Picker>
+                <Picker x:Name="bindCommandPicker" WidthRequest="60" VerticalOptions="CenterAndExpand" HorizontalOptions="Start" SelectedIndex="1">
+                    <Picker.Items>
+                    </Picker.Items>
+                </Picker>
+                <Button Clicked="clickBindNewCommand" Text="Bind" VerticalOptions="CenterAndExpand" HorizontalOptions="Start"/>
+            </StackLayout>
+
+            <Label VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" Text="Binded Commands:"/>
+
+            <ListView x:Name="CommandBindList" RowHeight="48" VerticalOptions="Start">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout Grid.Row="1" Orientation="Horizontal" Margin="10" Spacing="0">
+                                <Label x:Name="_idLabel" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" Text="{Binding id}"/>
+                                <Button Clicked="clickRemoveCommand" Text="Remove" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand"/>
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

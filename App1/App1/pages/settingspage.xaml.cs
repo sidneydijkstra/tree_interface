@@ -12,23 +12,31 @@ namespace App1.pages{
 	public partial class settingspage : ContentPage{
 		public settingspage (){
 			InitializeComponent ();
-            entryName.Text = SettingsController.info.name;
-            entryIp.Text = SettingsController.info.ip;
-            entryPort.Text = SettingsController.info.port.ToString();
-            entryAuthId.Text = SettingsController.info.auth_key;
+            Setting_Tree tree = SettingsController.tree;
+            entryNormalR.Text = tree.normal.r.ToString();
+            entryNormalG.Text = tree.normal.g.ToString();
+            entryNormalB.Text = tree.normal.b.ToString();
+
+            entryBlinkR.Text = tree.blink.r.ToString();
+            entryBlinkG.Text = tree.blink.g.ToString();
+            entryBlinkB.Text = tree.blink.b.ToString();
         }
 
-        private void clickResyncSettingsInfo(object sender, EventArgs e){
-            System.Net.IPAddress tempIp;
-            int tempInt;
+        private void clickResyncSettingsTree(object sender, EventArgs e){
+            Setting_RGB _normal = new Setting_RGB() { r = 255, g = 255, b = 255 };
+            int.TryParse(entryNormalR.Text, out _normal.r);
+            int.TryParse(entryNormalG.Text, out _normal.g);
+            int.TryParse(entryNormalB.Text, out _normal.b);
+            Setting_RGB _blink = new Setting_RGB() { r = 255, g = 255, b = 255 };
+            int.TryParse(entryBlinkR.Text, out _blink.r);
+            int.TryParse(entryBlinkG.Text, out _blink.g);
+            int.TryParse(entryBlinkB.Text, out _blink.b);
+            
+            SettingsController.resyncTree(new Setting_Tree() { normal = _normal, blink = _blink });
+        }
 
-            Setting_Info info = SettingsController.info;
-            info.name = entryName.Text == "" ? info.name : entryName.Text;
-            info.ip = !System.Net.IPAddress.TryParse(entryIp.Text, out tempIp) ? info.ip : entryIp.Text;
-            info.port = int.TryParse(entryPort.Text, out tempInt) ? info.port : int.Parse(entryPort.Text);
-            info.auth_key = entryAuthId.Text == "" ? info.auth_key : entryAuthId.Text;
-
-            SettingsController.resyncInfo(info);
+        private void clickNavigateAdvancedSettings(object sender, EventArgs e) {
+            this.Navigation.PushAsync(new advancedsettingspage());
         }
 	}
 }
